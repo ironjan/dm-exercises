@@ -2,26 +2,81 @@ package com.example
 
 
 object Hello {
+
+
+  /** “Advanced programming” -- “Ohjelmoinnin jatkokurssi”, also “Java-ohjelmointi” */
+  val AdvancedProgramming = "Ohjelmoinnin_jatkokurssi"
+
+  /** “Introduction to programming” -- “Ohjelmoinnin perusteet” */
   val IntroductionToProgramming = "Ohjelmoinnin_perusteet"
-  val AdvancedProgramming = "Aineopintojen_harjoitusty_Ohjelmointi"
+
+  /** “Data structures” -- “Tietorakenteet ja algoritmit” */
   val DataStructures = "Tietorakenteet_ja_algoritmit"
+
 
   def main(args: Array[String]): Unit = {
     val D = parseDataSet(readDataSet)
     // warmUpExercises(D)
 
 
-    val set = Set(IntroductionToProgramming, AdvancedProgramming)
-    val support = supportCountOfSetInD(set, D)
-    println(s"Support: $support")
+    val ia = Set(IntroductionToProgramming, AdvancedProgramming)
+    val iad = Set(IntroductionToProgramming, AdvancedProgramming, DataStructures)
 
-    // 13. Assume that there is a rule "if a student takes introductory programming course, then she will also take the advanced programming course.". To how many students does this rule apply? Implement a program to determine that.
+    println(s"N = ${N(D)}")
+
+    val support = supportOfSetInD(ia, D)
+    println(s"Support of {IntroductionToProgramming, AdvancedProgramming}: $support")
+
+    // 13. Assume that there is a rule "if a student takes introductory programming course, then she will also take the
+    // advanced programming course.". To how many students does this rule apply? Implement a program to determine that.
+    val rule = (Set(IntroductionToProgramming), Set(AdvancedProgramming))
+    val supportCount = supportCountOfRuleInD(rule, D)
+    println(s"supportCount of {IntroductionToProgramming} -> {AdvancedProgramming}: $supportCount")
+
+    // 14. Familiarize yourself with the concept of “Association rule” and find out how “Support” or “Relative Frequency”
+    // is counted for such rules. Write also your explanation of these concepts into your learning diary.
+    // Finally, write a program that determines the support for the rule {"Introduction to programming"} -> {"Advanced programming"}
+    val supportRule = supportOfRuleInD(rule, D)
+    println(s"support of {IntroductionToProgramming} -> {AdvancedProgramming}: $supportRule")
+
+    // 18. Consider the statement “students that take the introductory programming course take the advanced programming
+    // course in x% of the cases”. Given the dataset, what value is the x?
+    val p1 = 100 * supportOfSetInD(ia, D) / supportOfSetInD(Set(IntroductionToProgramming), D)
+    println(s"$p1% of students that take IntroductionToProgramming take AdvancedProgramming")
+
+    // 19. Consider the statement “students that take the introductory programming course and the advanced programming
+    // course take the data structures course in x% of the cases”. Given the dataset, what value is the x?
+    val p2 = 100 * supportOfSetInD(iad, D) / supportOfSetInD(ia, D)
+    println(s"$p2% of students that take IA take D")
+
+    // 20. Familiarize yourself with the concept of “Confidence” (or “Rule strength”) and write a program that
+    // determines the confidence for the rule {"Introduction to programming"} -> {"Advanced programming"}. When the
+    // program has been finished, explain the concept “Confidence” in your learning diary.
+    val conf = confidence(rule, D)
+    println(s"conf({IntroductionToProgramming} -> {AdvancedProgramming}) = $conf")
+
+    // 21-23. Write a program that determines the Confidence for any given rule A -> B, where A and B are sets of courses.
 
   }
 
-  private def supportCountOfSetInD(set: Set[String], D: List[Registration]) = {
-    D.count(_.attempted(set)).toDouble / D.count(_ => true)
+  private def confidence(rule: (Set[String], Set[String]), D: List[Registration]) = {
+    supportOfRuleInD(rule, D) / supportOfSetInD(rule._1, D)
   }
+
+  private def supportOfSetInD(set: Set[String], D: List[Registration]) = {
+    D.count(_.attempted(set)).toDouble / N(D)
+  }
+
+  def supportOfRuleInD(rule: (Set[String], Set[String]), D: List[Registration]) = {
+    supportCountOfRuleInD(rule, D).toDouble / N(D)
+  }
+
+  def supportCountOfRuleInD(rule: (Set[String], Set[String]), D: List[Registration]) = {
+    val union = rule._1 union rule._2
+    D.count(_.attempted(union))
+  }
+
+  def N(D: List[Registration]) = D.count(_ => true)
 
   private def warmUpExercises(D: List[Registration]) = {
     printDifferentCourseCodes(D)
