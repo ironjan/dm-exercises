@@ -1,14 +1,16 @@
 package com.example
 
+/**
+  * 1. Write an application that reads in the dataset, and prints out all the different course_codes in the file.
+  * 2. Create a program (or a method) that counts the number of students that have attempted the course "Introduction to programming"
+  * 3. Create a program (or a method) that counts the number of students that have passed the course "Introduction to programming"
+  * 4. Create a program (or a method) that counts the number of students that have passed the course "Advanced programming"
+  * 5. Create a program (or a method) that counts the number of students that have passed the course "Data structures" with a grade 4
+  */
 object Hello {
   def main(args: Array[String]): Unit = {
     val D = readDataSet
     
-    D.foreach{d =>
-      println(s"${d._1}")
-      d._2.map(x => "  " + x.mkString(", "))
-        .foreach(println)
-    }
   }
 
   def readDataSet = {
