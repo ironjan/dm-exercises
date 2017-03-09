@@ -5,9 +5,10 @@ case class Registration(registrationYear: Int,
 
 object Registration {
   implicit class RegistrationOps(registration: Registration){
+    def passed(courseNames: String*): Boolean = courseNames.map(passed).reduce(_ && _)
     def passed(courseName: String): Boolean = passedWithMinGrade(1, courseName)
-    def passed(courseNames: String*): Boolean = courseNames.map((courseName: String) => passedWithMinGrade(1, courseName)).reduce(_ && _)
 
+    def attempted(courseNames: String*): Boolean = courseNames.map(attempted).reduce(_ && _)
     def attempted(courseName: String): Boolean = passedWithMinGrade(0, courseName)
 
     def passedWithMinGrade(minGrade: Int, courseNames: String*): Boolean =
