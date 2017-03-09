@@ -1,7 +1,6 @@
 
 
-object Hello {
-
+object Main {
 
   val booktitles = Map(
     "T" -> "The manly art of knitting",
@@ -14,9 +13,12 @@ object Hello {
   )
 
   def main(args: Array[String]): Unit = {
-    val D = readDataSet
+    val D = (new BookDataSetReader).readDataSet("./data.csv")
 
-    println("g")
+    val utils = new DataMiningUtils[String]
+
+
+    println(s"Read ${utils.N(D)} entries.")
 
   }
 
@@ -43,22 +45,4 @@ object Hello {
 
 
 
-  def readDataSet = {
-    var D = List[Set[String]]()
-    val bufferedSource = io.Source.fromFile("./data.csv")
-    for (line <- bufferedSource.getLines) {
-      val books = line.split(" ").map(_.trim).toSet
-      D = books :: D
-    }
-    bufferedSource.close
-
-    D
-  }
-
-  def toCourseRecord(raw: Array[String]): CourseRecord =
-    CourseRecord(raw(0),
-      raw(1).toInt,
-      raw(2).tail.init,
-      raw(3).toDouble,
-      raw(4).toInt)
 }
