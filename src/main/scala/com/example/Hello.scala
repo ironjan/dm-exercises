@@ -8,18 +8,18 @@ object Hello {
 
   def main(args: Array[String]): Unit = {
     val D = parseDataSet(readDataSet)
-    warmUpExercises(D)
+    // warmUpExercises(D)
 
 
-// 12. [...] write a program that determines the support for {"Introduction to programming", “Advanced programming"} in the dataset [...]
+    // 12. [...] write a program that determines the support for {"Introduction to programming", “Advanced programming"} in the dataset [...]
     val supportCount: Double = D.count(_.attempted(IntroductionToProgramming, AdvancedProgramming))
     val N = D.count(_ => true)
-    val support = supportCount/N
+    val support = supportCount / N
     println(s"Support: $support = $supportCount/$N")
 
-      // 13. Assume that there is a rule "if a student takes introductory programming course, then she will also take the advanced programming course.". To how many students does this rule apply? Implement a program to determine that.
+    // 13. Assume that there is a rule "if a student takes introductory programming course, then she will also take the advanced programming course.". To how many students does this rule apply? Implement a program to determine that.
 
-      }
+  }
 
   private def warmUpExercises(D: List[Registration]) = {
     printDifferentCourseCodes(D)
