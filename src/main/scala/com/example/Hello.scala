@@ -8,6 +8,12 @@ object Hello {
 
   def main(args: Array[String]): Unit = {
     val D = parseDataSet(readDataSet)
+    warmUpExercises(D)
+
+
+  }
+
+  private def warmUpExercises(D: List[Registration]) = {
     printDifferentCourseCodes(D)
 
     // 2. Create a program (or a method) that counts the number of students that have attempted the course "Introduction to programming"
@@ -23,16 +29,15 @@ object Hello {
     println("Passed Data structures: " + D.count(_.passedWithMinGrade(4, DataStructures)))
 
     // 7. Create a program (or a method) that counts the number of students that have passed the courses "Introduction to programming" and "Advanced programming"
-    println("Passed Introduction to Programming and Advanced Programming: " + D.count(r => r.passed(IntroductionToProgramming, AdvancedProgramming)))
+    println("Passed Introduction to Programming and Advanced Programming: " + D.count(_.passed(IntroductionToProgramming, AdvancedProgramming)))
 
     // 8. Create a program (or a method) that counts the number of students that have passed the courses "Introduction to programming", "Advanced programming" and "Data structures"
-    println("Passed Introduction to Programming, Advanced Programming, and Data structures: " + D.count(r => r.passed(IntroductionToProgramming, AdvancedProgramming, IntroductionToProgramming)))
+    println("Passed Introduction to Programming, Advanced Programming, and Data structures: " + D.count(_.passed(IntroductionToProgramming, AdvancedProgramming, IntroductionToProgramming)))
 
     // 9. Create a program (or a method) that counts the number of students that have passed the courses "Introduction to programming", "Advanced programming" and "Data structures", all with a grade 4
-    println("Passed Introduction to Programming, Advanced Programming, and Data structures *with 4*: " + D.count(r => r.passedWithMinGrade(4, IntroductionToProgramming, AdvancedProgramming, IntroductionToProgramming)))
+    println("Passed Introduction to Programming, Advanced Programming, and Data structures *with 4*: " + D.count(_.passedWithMinGrade(4, IntroductionToProgramming, AdvancedProgramming, IntroductionToProgramming)))
 
     // 10. If you haven't already done so, refactor your code so that you can count the number of students that have attended any given set of courses with a given grade interval.
-
   }
 
   /**
