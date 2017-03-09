@@ -21,13 +21,20 @@ object Main {
     // in the obvious way. For example, “EO” represents set {E, O} and EOP set {E, O, P}. Calculate the supports of the
     // book sets. Nodes “E” and “O” already have their supports marked down.
 
+    val minSupport = 0.4
+    val minConfidence = 0.0
     val itemset = bookmining.IS
-    val allSubsets = itemset.subsets()
 
-    allSubsets.map(s => (s, bookmining.supportOfSetInD(s)))
+
+    // APriorivstarts here
+    val N = bookmining.N
+    val minSupportCount = minSupport * N
+
+    val F1 = itemset
+
+    F1.map(s => (s, bookmining.supportOfSetInD(Set(s))))
+        .filter(_._2 > minSupport)
       .foreach(println)
-
-
   }
 
   private def confidence(rule: (Set[String], Set[String]), D: List[Registration]) = {
