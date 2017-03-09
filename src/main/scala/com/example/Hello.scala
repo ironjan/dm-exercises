@@ -9,8 +9,15 @@ package com.example
   */
 object Hello {
   def main(args: Array[String]): Unit = {
-    val D = readDataSet
-    
+    val D = parseDataSet(readDataSet)
+  }
+
+  private def parseDataSet(D: List[(String, List[List[String]])]) = {
+    D.map { r =>
+      val registrationYear = r._1.toInt
+      val courseRecords = r._2.map(_.toArray).map(toCourseRecord)
+      Registration(registrationYear, courseRecords)
+    }
   }
 
   def readDataSet = {
@@ -29,4 +36,11 @@ object Hello {
 
     D
   }
+
+  def toCourseRecord(raw: Array[String]): CourseRecord =
+    CourseRecord(raw(0),
+      raw(1).toInt,
+      raw(2),
+      raw(3).toDouble,
+      raw(4).toInt)
 }
