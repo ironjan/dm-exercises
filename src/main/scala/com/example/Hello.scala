@@ -11,46 +11,46 @@ object Hello {
     printDifferentCourseCodes(D)
 
     // 2. Create a program (or a method) that counts the number of students that have attempted the course "Introduction to programming"
-    countStudentsWith(D, IntroductionToProgramming, 0)
+    println("Attempted Introduction to Programming: " + D.count(_.attempted(IntroductionToProgramming)))
 
     // 3. Create a program (or a method) that counts the number of students that have passed the course "Introduction to programming"
-    countStudentsWith(D, IntroductionToProgramming, 1)
+    println("Passed Introduction to Programming: " + D.count(_.passed(IntroductionToProgramming)))
 
     // 4. Create a program (or a method) that counts the number of students that have passed the course "Advanced programming"
-    countStudentsWith(D, AdvancedProgramming, 1)
+    println("Passed Advanced programming: " + D.count(_.passed(AdvancedProgramming)))
 
     // 5. Create a program (or a method) that counts the number of students that have passed the course "Data structures" with a grade 4
-    countStudentsWith(D, DataStructures, 4)
+    println("Passed Data structures: " + D.count(_.passedWithMinGrade(4, DataStructures)))
+
+    // 7. Create a program (or a method) that counts the number of students that have passed the courses "Introduction to programming" and "Advanced programming"
+    println("Passed Introduction to Programming and Advanced Programming: " + D.count(r => r.passed(IntroductionToProgramming, AdvancedProgramming)))
+
+    // 8. Create a program (or a method) that counts the number of students that have passed the courses "Introduction to programming", "Advanced programming" and "Data structures"
+    println("Passed Introduction to Programming, Advanced Programming, and Data structures: " + D.count(r => r.passed(IntroductionToProgramming, AdvancedProgramming, IntroductionToProgramming)))
+
+    // 9. Create a program (or a method) that counts the number of students that have passed the courses "Introduction to programming", "Advanced programming" and "Data structures", all with a grade 4
+    println("Passed Introduction to Programming, Advanced Programming, and Data structures *with 4*: " + D.count(r => r.passedWithMinGrade(4, IntroductionToProgramming, AdvancedProgramming, IntroductionToProgramming)))
+
+    // 10. If you haven't already done so, refactor your code so that you can count the number of students that have attended any given set of courses with a given grade interval.
+
   }
 
   /**
     * 1. Write an application that [...] prints out all the different course_codes in the file.
     */
-  private def printDifferentCourseCodes(D: List[Registration]): Unit ={
+  private def printDifferentCourseCodes(D: List[Registration]): Unit = {
     println("Course Codes:")
 
     val printed = D.flatMap(r => r.courseRecords)
       .map(_.code)
       .distinct
-        .sorted
+      .sorted
       .mkString(", ")
-      println(s"$printed")
+    println(s"$printed")
   }
 
-  def countStudentsWith(D: List[Registration], s: String, minGrade: Int) = {
-    val number =
-      D.map{d =>
-        val filteredRecords =
-          d.courseRecords
-            .filter(_.name == s)
-            .filter(_.finalGrade > minGrade)
+  def countStudentsWith(D: List[Registration], s: String, minGrade: Int) = D.count(_.passedWithMinGrade(minGrade, s))
 
-        d.copy(courseRecords = filteredRecords)
-      }
-      .count(_.courseRecords.nonEmpty)
-
-    println(s"$number students had min grade $minGrade in `$s`.")
-  }
 
   private def parseDataSet(D: List[(String, List[List[String]])]) = {
     D.map { r =>
