@@ -2,7 +2,7 @@
   * Some data mining utils implemented in an abstract way
   * @tparam T
   */
-class DataMiningUtils[T](D: List[Set[T]]) {
+class DataMiningUtils[T <: Comparable[T]](D: List[Set[T]]) {
 
   /**
     * Determines the confidence of the given rule
@@ -52,6 +52,11 @@ class DataMiningUtils[T](D: List[Set[T]]) {
     * @return the item set of D
     */
   def IS = D.flatten.distinct.toSet
+  /**
+    * Computes a sorted list of basic elements in D
+    * @return the sorted item list of D
+    */
+  def sortedItemList = IS.toList.sorted
 
 
 }

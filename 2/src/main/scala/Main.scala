@@ -23,19 +23,10 @@ object Main {
 
     val minSupport = 0.4
     val minConfidence = 0.0
-    val itemset = bookmining.IS
 
-
-    // APriorivstarts here
-    val N = bookmining.N
-    val minSupportCount = minSupport * N
-
-    val F1 = itemset
-
-    F1.map(s => (s, bookmining.supportOfSetInD(Set(s))))
-        .filter(_._2 > minSupport)
-      .foreach(println)
+    (new Apriori(bookmining)).apriori(minSupport, minConfidence)
   }
+
 
   private def confidence(rule: (Set[String], Set[String]), D: List[Registration]) = {
     supportOfRuleInD(rule, D) / supportOfSetInD(rule._1, D)
