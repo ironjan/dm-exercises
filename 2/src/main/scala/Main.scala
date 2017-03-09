@@ -15,10 +15,14 @@ object Main {
   def main(args: Array[String]): Unit = {
     val D = (new BookDataSetReader).readDataSet("./data.csv")
 
-    val utils = new DataMiningUtils[String]
+    val utils = new DataMiningUtils[String](D)
+
+    // 5: Consider the book data given in the above link. The following picture has nodes that correspond to book sets
+    // in the obvious way. For example, “EO” represents set {E, O} and EOP set {E, O, P}. Calculate the supports of the
+    // book sets. Nodes “E” and “O” already have their supports marked down.
 
 
-    println(s"Read ${utils.N(D)} entries.")
+    println(s"Read ${utils.N} entries.")
 
   }
 
