@@ -21,7 +21,9 @@ object Main {
     // in the obvious way. For example, “EO” represents set {E, O} and EOP set {E, O, P}. Calculate the supports of the
     // book sets. Nodes “E” and “O” already have their supports marked down.
 
-    new Apriori(bookmining).apriori
+    Stream(0.05, 0.15, 0.25, 0.5, 0.8, 1)
+      .map(s => (s, new Apriori(bookmining, s).findFrequent.length))
+      .foreach(println)
   }
 
 

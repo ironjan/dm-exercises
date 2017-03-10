@@ -3,7 +3,7 @@ class Apriori[T <: Comparable[T]](bookmining: DataMiningUtils[T], minSupport: Do
   def fulfillMinSupport = (set: Set[T]) => bookmining.supportOfSetInD(set) >= minSupport
 
 
-  def apriori: Unit = {
+  def findFrequent: List[List[T]] = {
     val N = bookmining.N
     val minSupportCount = minSupport * N
     val itemset = bookmining.sortedItemList
@@ -14,47 +14,37 @@ class Apriori[T <: Comparable[T]](bookmining: DataMiningUtils[T], minSupport: Do
         .map(Set(_))
         .filter(fulfillMinSupport)
         .map(_.toList.sorted)
-    println(s"${itemset.length} candidates filtered to ${F1.length}")
 
     var F_kMinus1 = F1
     var Fs = List(F1)
 
     while(canGenerateCandidates(F_kMinus1)) {
-      val Fk = supportPrune(frequentPrune(generateCandidates(F_kMinus1), F_kMinus1))
+      val generated = generateCandidates(F_kMinus1)
+      val frequentPruned = frequentPrune(generated, F_kMinus1)
+      val Fk = supportPrune(frequentPruned)
+      println(s" ${generated.length} -> ${frequentPruned.length} -> ${Fk.length}")
       Fs = Fk :: Fs
       F_kMinus1 = Fk
     }
 
-    println(s"Generated ${Fs.flatten.length}")
+    val result = Fs.flatten
+    result
   }
   def frequentPrune(Fk: List[List[T]], F_kMinus1: List[List[T]]) = {
     val F_kMinus1Sets = F_kMinus1.map(_.toSet).toSet
+    val k = F_kMinus1.head.length + 1
 
-    println("Frequent prune")
-    println(s"F_kMinus1: $F_kMinus1Sets")
-    val pruned = Fk.filter{fk =>
-      val fkSet = fk.toSet
-      println(s"Checking $fkSet")
-      val subsets = fkSet.subsets
-      subsets.map { ss =>
-        println(s"  $ss")
-        F_kMinus1Sets.contains(ss)
-      }.reduce(_ && _)
-    }
-
-    println(s"${Fk.length} candidates pruned by frequent to ${pruned.length}")
-
-    pruned
+    Fk.filter(_.toSet.subsets(k - 1)
+      .map(F_kMinus1Sets.contains)
+      .reduce(_ && _))
   }
 
   private def canGenerateCandidates(F_kMinus1: List[List[T]]) = F_kMinus1.nonEmpty
   private def supportPrune(candidates: List[List[T]]) = {
-    val pruned = candidates
+    candidates
       .map(_.toSet)
       .filter(fulfillMinSupport)
       .map(_.toList.sorted)
-    println(s"${candidates.length} candidates pruned by support to ${pruned.length}")
-    pruned
   }
 
   private def generateCandidates(F_kMinus1: List[List[T]]) = {
