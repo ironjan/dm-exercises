@@ -22,7 +22,6 @@ class Apriori[T <: Comparable[T]](bookmining: DataMiningUtils[T], minSupport: Do
       val generated = generateCandidates(F_kMinus1)
       val frequentPruned = frequentPrune(generated, F_kMinus1)
       val Fk = supportPrune(frequentPruned)
-      println(s" ${generated.length} -> ${frequentPruned.length} -> ${Fk.length}")
       Fs = Fk :: Fs
       F_kMinus1 = Fk
     }

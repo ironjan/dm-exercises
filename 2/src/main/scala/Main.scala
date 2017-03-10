@@ -22,7 +22,13 @@ object Main {
     // book sets. Nodes “E” and “O” already have their supports marked down.
 
     Stream(0.05, 0.15, 0.25, 0.5, 0.8, 1)
-      .map(s => (s, new Apriori(bookmining, s).findFrequent.length))
+      .map{s => 
+          val start: Long = System.currentTimeMillis
+          val frequent = new Apriori(bookmining, s).findFrequent
+          val end: Long = System.currentTimeMillis
+
+          (s, frequent.length, s"${end - start}ms")
+      }
       .foreach(println)
   }
 
