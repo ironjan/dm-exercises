@@ -1,0 +1,5 @@
+A: < {index} {teaching} {courses} {dm} >
+B: < {index} {teaching} {courses} {courses} {dm} >
+C: < {dm} {courses} {dm} >
+D: < {courses} >
+E: < {index} {teaching} {courses} >
