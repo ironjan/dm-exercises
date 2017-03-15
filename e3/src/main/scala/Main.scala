@@ -2,19 +2,12 @@
 
 object Main {
 
-  case class Transaction(user: String, visits: Seq[String])
-   object Transaction{
-     implicit class TransactionOps(transaction: Transaction){
-       def contains(is: String*): Boolean =  contains(is.toSet)
-       def contains(is: Set[String]): Boolean =  is.map(transaction.visits.contains).reduce(_ && _)
-     }
-   }
   val D = List(
     Transaction("A", Seq("index", "teaching", "courses", "dm")),
-      Transaction("B", Seq("index", "teaching", "courses", "courses", "dm")),
-        Transaction("C", Seq("dm", "courses", "dm")),
-          Transaction("D", Seq("courses")),
-            Transaction("E", Seq("index", "teaching", "courses")))
+    Transaction("B", Seq("index", "teaching", "courses", "courses", "dm")),
+    Transaction("C", Seq("dm", "courses", "dm")),
+    Transaction("D", Seq("courses")),
+    Transaction("E", Seq("index", "teaching", "courses")))
 
   def main(args: Array[String]): Unit = {
     println(D)
@@ -24,7 +17,71 @@ object Main {
     e3
     e4
     e5
-e6
+    e6
+
+    /* 7. List all subsequences of the sequence < {A} {B} {C} >
+    *
+    * < >
+    * < {A} >
+    * < {B} >
+    * < {C} >
+    * < {A} {B} >
+    * < {A} {C} >
+    * < {B} {C} >
+    * < {A} {B} {C} >
+    */
+
+    /* 8. List all subsequences of the sequence < {A, B} {C} >
+    *
+    * < >
+    * < {A} >
+    * < {B} >
+    * < {C} >
+    * < {A} {C} >
+    * < {B} {C} >
+    * < {A, B} {C} >
+    *
+    * */
+
+    /* 9. List all subsequences of the sequence < {A, B} {A, B} >
+     *
+     * < >
+     * < {A} >
+     * < {B} >
+     * < {A} {A} >
+     * < {A} {B} >
+     * < {A} {A, B} >
+     * < {B} {A} >
+     * < {B} {B} >
+     * < {B} {A, B} >
+     * < {A, B} {A} >
+     * < {A, B} {B} >
+     * < {A, B} {A, B} >
+     *
+     * */
+
+    /* 11. * What are all the possible 1- and 2-sequences for the events A, B, and C?
+     *
+     * < {A} >
+     * < {B} >
+     * < {C} >
+     *
+     * 3^1 1-seq
+     *
+     * < {A} {A} >
+     * < {A} {B} >
+     * < {A} {C} >
+     * < {B} {A} >
+     * < {B} {B} >
+     * < {B} {C} >
+     * < {C} {A} >
+     * < {C} {B} >
+     * < {C} {C} >
+     *
+     * 9 = 3^2 2-seq
+     *
+     * n items -> n^2 2-seqs
+     */
   }
 
   /** 1. Does the web page sequence < index, teaching > exist in any of the students’ browsing records? If yes, for whom? */
@@ -53,21 +110,24 @@ e6
     computeAndPrintSupportCount(Set("index", "courses"))
   }
 
-/** 5. List all 1-sequences (sequences containing exactly one page visit) in the data, and calculate their support counts. */
-def e5 = {
-  val seq1 = D.flatMap(_.visits).toSet
-  seq1.foreach(s => computeAndPrintSupportCount(s))
-}
-  /** 6. Assume (only) the following 2-sequences, and fill in the support for the sequences where they do not exist. */
-def e6 = {
-val seq2 = D.flatMap(_.visits).toSet.subsets(2)
-  seq2.foreach(s => computeAndPrintSupportCount(s))
-}
+  /** 5. List all 1-sequences (sequences containing exactly one page visit) in the data, and calculate their support counts. */
+  val is = D.flatMap(_.visits).toSet
 
+  def e5 = {
+    is.foreach(s => computeAndPrintSupportCount(s))
+  }
+
+  /** 6. Assume (only) the following 2-sequences, and fill in the support for the sequences where they do not exist. */
+  def e6 = {
+    val seq2 = D.flatMap(_.visits).toSet.subsets(2)
+    seq2.foreach(s => computeAndPrintSupportCount(s))
+  }
 
   private def computeAndPrintSupportCount(strs: String*): Unit = computeAndPrintSupportCount(strs.toSet)
+
   private def computeAndPrintSupportCount(s: Set[String]): Unit = {
     val count = D.count(t => t.contains(s))
     println(s"support count of $s: $count")
   }
+
 }

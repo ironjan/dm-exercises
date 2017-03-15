@@ -1,0 +1,35 @@
+[debug] [naha] 
+[debug] [naha] Initial source changes: 
+[debug] [naha] 	removed:Set()
+[debug] [naha] 	added: Set(C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Main.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\SeqExtension.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Transaction.scala)
+[debug] [naha] 	modified: Set()
+[debug] [naha] Invalidated products: Set()
+[debug] [naha] External API changes: API Changes: Set()
+[debug] [naha] Modified binary dependencies: Set()
+[debug] [naha] Initial directly invalidated sources: Set(C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Main.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\SeqExtension.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Transaction.scala)
+[debug] [naha] 
+[debug] [naha] Sources indirectly invalidated by:
+[debug] [naha] 	product: Set()
+[debug] [naha] 	binary dep: Set()
+[debug] [naha] 	external source: Set()
+[debug] All initially invalidated sources: Set(C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Main.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\SeqExtension.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Transaction.scala)
+[debug] [naha] Initial set of included nodes: Set(C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Main.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\SeqExtension.scala, C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Transaction.scala)
+[debug] [naha] Recompiling all 3 sources: invalidated sources (3) exceeded 50.0% of all sources
+[info] Compiling 3 Scala sources to C:\Users\Jan Lippert\Desktop\dm-exercises\e3\target\scala-2.11\classes...
+[debug] Getting org.scala-sbt:compiler-interface:0.13.13:component from component compiler for Scala 2.11.7
+[debug] Getting org.scala-sbt:compiler-interface:0.13.13:component from component compiler for Scala 2.11.7
+[debug] Running cached compiler 5402503b, interfacing (CompilerInterface) with Scala compiler version 2.11.7
+[debug] Calling Scala compiler with arguments  (CompilerInterface):
+[debug] 	-bootclasspath
+[debug] 	C:\Program Files\Java\jdk1.8.0_121\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_121\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_121\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_121\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_121\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_121\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_121\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_121\jre\classes;C:\Users\Jan Lippert\.ivy2\cache\org.scala-lang\scala-library\jars\scala-library-2.11.7.jar
+[debug] 	-classpath
+[debug] 	C:\Users\Jan Lippert\Desktop\dm-exercises\e3\target\scala-2.11\classes
+[error] C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Main.scala:76: ';' expected but ')' found.
+[error]     val actual = Set(Seq(Set("A"), Set("C")), Seq(Set("B"), Set("C")), Set("A", "B"), Set("C")))
+[error]                                                                                                ^
+[error] C:\Users\Jan Lippert\Desktop\dm-exercises\e3\src\main\scala\Main.scala:83: '=' expected but '}' found.
+[error]   }
+[error]   ^
+[error] two errors found
+[debug] Compilation failed (CompilerInterface)
+[error] (e3/compile:compileIncremental) Compilation failed
